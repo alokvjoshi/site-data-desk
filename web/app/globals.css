@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f6f8f6;
+  --surface: #ffffff;
+  --surface-2: #eef3f0;
+  --ink: #14211d;
+  --muted: #56675f;
+  --line: #d9e1dc;
+  --accent: #0e6b5b;
+  --accent-ink: #ffffff;
+  --accent-soft: #dff1ec;
+  --warn: #8a5300;
+  --warn-bg: #fff3dc;
+  --bad: #9c2222;
+  --bad-bg: #fdeaea;
+  --good: #1a6e3e;
+  --mark: #fff0a3;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1412;
+    --surface: #141d1a;
+    --surface-2: #1a2622;
+    --ink: #e6eeea;
+    --muted: #92a69e;
+    --line: #26342f;
+    --accent: #4cc3aa;
+    --accent-ink: #052019;
+    --accent-soft: #14312b;
+    --warn: #f0b35a;
+    --warn-bg: #2a2010;
+    --bad: #ff9a9a;
+    --bad-bg: #321616;
+    --good: #75d49c;
+    --mark: #59500f;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accentink: var(--accent-ink);
+  --color-accentsoft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warnbg: var(--warn-bg);
+  --color-bad: var(--bad);
+  --color-badbg: var(--bad-bg);
+  --color-good: var(--good);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html { background: var(--bg); }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.prose-sdd p { margin: 0 0 0.6rem; line-height: 1.6; }
+.prose-sdd ul { list-style: disc; padding-left: 1.25rem; margin: 0 0 0.6rem; }
+.prose-sdd li { margin: 0.25rem 0; line-height: 1.55; }
+.prose-sdd h1, .prose-sdd h2, .prose-sdd h3, .prose-sdd h4 { font-weight: 650; margin: 1.1rem 0 0.4rem; line-height: 1.3; }
+.prose-sdd h1 { font-size: 1.4rem; } .prose-sdd h2 { font-size: 1.2rem; } .prose-sdd h3 { font-size: 1.05rem; }
+.prose-sdd table { border-collapse: collapse; margin: 0.6rem 0; font-size: 0.875rem; display: block; overflow-x: auto; }
+.prose-sdd th, .prose-sdd td { border: 1px solid var(--line); padding: 0.3rem 0.55rem; text-align: left; }
+.prose-sdd th { background: var(--surface-2); }
+.prose-sdd blockquote { border-left: 3px solid var(--line); padding-left: 0.8rem; color: var(--muted); margin: 0.6rem 0; }
+.prose-sdd a { color: var(--accent); text-decoration: underline; }

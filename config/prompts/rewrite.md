@@ -1,0 +1,1 @@
+Rewrite the user's latest message as one standalone search question, using the previous turns only to resolve references such as "it", "that project" or "the same site". Keep every number, name and term. Output only the question via the tool.

@@ -1,0 +1,6 @@
+{
+  "note": "Provisional. Check https://openrouter.ai/deepseek/deepseek-v4-flash-20260731 before relying on these.",
+  "llm_in_per_million_usd": 0.04,
+  "llm_out_per_million_usd": 0.08,
+  "jev_per_request_usd": 0
+}

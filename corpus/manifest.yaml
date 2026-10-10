@@ -1,0 +1,89 @@
+# Real standards used by Site Data Desk.
+# `public: true` entries are indexed in the public demo and committed to vault/standards/ as
+# text extracted from the official PDF. Everything else is opt-in: download it yourself, drop the
+# PDF in corpus/local/, and run `make sync-local` to index it into YOUR OWN Supabase project only.
+#
+# licence_verified means: the licence statement was read from the publisher's own page on the date shown.
+documents:
+  - id: nepm-b1
+    title: "NEPM (Assessment of Site Contamination) Schedule B1 - Guideline on Investigation Levels for Soil and Groundwater"
+    short: "NEPM ASC Sch B1"
+    publisher: "National Environment Protection Council, via Federal Register of Legislation (F2013L00768)"
+    url: "https://legislation.gov.au/F2013L00768/asmade/2013-05-15/text/original/pdf/2"
+    file: corpus/cache/nepm-b1.pdf
+    sha256: 2ec3f9344cc933b3fede00c64cf5c3e28cb8c1738fd8c669dfb48f4121357c6a
+    licence: "CC BY 4.0"
+    licence_source: "https://www.legislation.gov.au/terms-of-use"
+    licence_verified: true
+    verified_on: 2026-10-11
+    public: true
+  - id: nepm-b2
+    title: "NEPM (Assessment of Site Contamination) Schedule B2 - Guideline on Site Characterisation"
+    short: "NEPM ASC Sch B2"
+    publisher: "National Environment Protection Council, via Federal Register of Legislation (F2013L00768)"
+    url: "https://legislation.gov.au/F2013L00768/asmade/2013-05-15/text/original/pdf/3"
+    file: corpus/cache/nepm-b2.pdf
+    sha256: 8ce7222ac40487665eef46cacc0801cd1edd90ba158f3925393d51398694a759
+    licence: "CC BY 4.0"
+    licence_source: "https://www.legislation.gov.au/terms-of-use"
+    licence_verified: true
+    verified_on: 2026-10-11
+    public: true
+  - id: nepm-b3
+    title: "NEPM (Assessment of Site Contamination) Schedule B3 - Guideline on Laboratory Analysis of Potentially Contaminated Soils"
+    short: "NEPM ASC Sch B3"
+    publisher: "National Environment Protection Council, via Federal Register of Legislation (F2013L00768)"
+    url: "https://legislation.gov.au/F2013L00768/asmade/2013-05-15/text/original/pdf/4"
+    file: corpus/cache/nepm-b3.pdf
+    sha256: ed4d09971984982b0a41c337af9dccec7fcc9e75a24d625044bcef34632dc863
+    licence: "CC BY 4.0"
+    licence_source: "https://www.legislation.gov.au/terms-of-use"
+    licence_verified: true
+    verified_on: 2026-10-11
+    public: true
+  - id: nepm-b4
+    title: "NEPM (Assessment of Site Contamination) Schedule B4 - Guideline on Site-Specific Health Risk Assessment Methodology"
+    short: "NEPM ASC Sch B4"
+    publisher: "National Environment Protection Council, via Federal Register of Legislation (F2013L00768)"
+    url: "https://legislation.gov.au/F2013L00768/asmade/2013-05-15/text/original/pdf/5"
+    file: corpus/cache/nepm-b4.pdf
+    sha256: bb92b53c6cee61af87d052777a878e00780c18918728d066e2d010520a37f273
+    licence: "CC BY 4.0"
+    licence_source: "https://www.legislation.gov.au/terms-of-use"
+    licence_verified: true
+    verified_on: 2026-10-11
+    public: true
+  - id: nepm-b5a
+    title: "NEPM (Assessment of Site Contamination) Schedule B5a - Guideline on Ecological Risk Assessment"
+    short: "NEPM ASC Sch B5a"
+    publisher: "National Environment Protection Council, via Federal Register of Legislation (F2013L00768)"
+    url: "https://legislation.gov.au/F2013L00768/asmade/2013-05-15/text/original/pdf/6"
+    file: corpus/cache/nepm-b5a.pdf
+    sha256: 83110558cbd54157e34bdeb6e1c4dc89e42f6075e71c1866b984b4120f4caac6
+    licence: "CC BY 4.0"
+    licence_source: "https://www.legislation.gov.au/terms-of-use"
+    licence_verified: true
+    verified_on: 2026-10-11
+    public: true
+  - id: nepm-b6
+    title: "NEPM (Assessment of Site Contamination) Schedule B6 - Guideline on the Framework for Risk-Based Assessment of Groundwater Contamination"
+    short: "NEPM ASC Sch B6"
+    publisher: "National Environment Protection Council, via Federal Register of Legislation (F2013L00768)"
+    url: "https://legislation.gov.au/F2013L00768/asmade/2013-05-15/text/original/pdf/9"
+    file: corpus/cache/nepm-b6.pdf
+    sha256: f77f01bf49423c5bc242572510476355875636361af9e8af491eb316bc34fbf0
+    licence: "CC BY 4.0"
+    licence_source: "https://www.legislation.gov.au/terms-of-use"
+    licence_verified: true
+    verified_on: 2026-10-11
+    public: true
+  # --- opt-in, NOT in the public demo until the licence is read from the publisher's own page ---
+  - id: pfas-nemp-3
+    title: "PFAS National Environmental Management Plan (NEMP) Version 3.0 (a 3.1 may supersede it)"
+    short: "PFAS NEMP"
+    publisher: "HEPA National Chemicals Working Group, via DCCEEW"
+    url: "https://www.dcceew.gov.au/sites/default/files/documents/pfas-nemp-3.pdf"
+    file: corpus/local/pfas-nemp-3.pdf
+    licence: "unknown - check the copyright page inside the PDF"
+    licence_verified: false
+    public: false

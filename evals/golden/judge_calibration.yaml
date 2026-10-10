@@ -1,0 +1,40 @@
+# Human-labelled (claim, passage) pairs to measure how well the Jev support judgment agrees with a person.
+# label: supports | contradicts | unsupported
+passages:
+  hil: "Table 1A(1) Health investigation levels for soil contaminants. Chemical, Residential A, Residential B, Recreational C, Commercial/industrial D (mg/kg). Arsenic 100 500 300 3 000. Cadmium 20 150 90 900. Lead 300 1200 600 1 500. Mercury (inorganic) 40 120 80 730."
+  hilnote: "HILs are not intended to be clean-up levels. The decision on whether clean-up is required, and to what extent, should be based on site-specific assessment triggered by an exceedence of the HIL. HILs apply generally to the top 3 m of soil for residential use."
+  correction: "[email - CORRECTION - excavation volume - 2026-07-02] Ruth, a correction to my 12 June update: the 3,400 m3 figure was wrong. The surveyed volume removed is 2,860 m3. This lowers the disposal cost by approximately A$96k against what I implied."
+  reversal: "[email - RE: Neutralisation - switch to crushed limestone - 2026-05-13] Agreed. Reverse the earlier decision: replace lime dosing with crushed limestone in the treatment pond. Update the ASSMP as an addendum and tell the client the discharge pH was exceeded on 4 May."
+  trend: "[email - Round 2 results - trend - 2026-07-15] Round 2: MW04 PFOS + PFHxS = 9.8 ug/L (down from 12.4 ug/L in Round 1), a 21% decrease, but still well above the 0.07 ug/L screening value. Off-site surface water: all six points non-detect for PFOS and PFHxS."
+  rpd: "Data for primary and duplicate is collated and reported as a relative percent difference (RPD) of the mean concentration of both samples. If results show greater than 30% difference, a review should be conducted of the cause."
+pairs:
+  - {p: hil, label: supports, claim: "The residential A health investigation level for arsenic is 100 mg/kg."}
+  - {p: hil, label: supports, claim: "The commercial/industrial HIL D for lead is 1 500 mg/kg."}
+  - {p: hil, label: contradicts, claim: "The residential A health investigation level for cadmium is 90 mg/kg."}
+  - {p: hil, label: contradicts, claim: "The commercial/industrial HIL for arsenic is 100 mg/kg."}
+  - {p: hil, label: unsupported, claim: "The HIL for benzo(a)pyrene TEQ in residential A land use is 3 mg/kg."}
+  - {p: hilnote, label: supports, claim: "Health investigation levels are not intended to be used as clean-up levels."}
+  - {p: hilnote, label: supports, claim: "HILs generally apply to the top 3 m of soil for residential use."}
+  - {p: hilnote, label: contradicts, claim: "HILs are intended to be used as clean-up levels."}
+  - {p: hilnote, label: contradicts, claim: "HILs apply to the top 10 m of soil for residential use."}
+  - {p: hilnote, label: unsupported, claim: "HILs must be recalculated every five years."}
+  - {p: correction, label: supports, claim: "The surveyed volume removed was 2,860 m3."}
+  - {p: correction, label: supports, claim: "The earlier figure of 3,400 m3 was incorrect."}
+  - {p: correction, label: contradicts, claim: "The volume removed was 3,400 m3."}
+  - {p: correction, label: unsupported, claim: "The excavation was completed in July 2026."}
+  - {p: correction, label: unsupported, claim: "The client approved the lower disposal cost."}
+  - {p: reversal, label: supports, claim: "The lime dosing decision was reversed in favour of crushed limestone."}
+  - {p: reversal, label: supports, claim: "The ASSMP is to be updated with an addendum."}
+  - {p: reversal, label: contradicts, claim: "The lime dosing approach was kept in place."}
+  - {p: reversal, label: unsupported, claim: "The limestone cost A$12,000."}
+  - {p: reversal, label: unsupported, claim: "The regulator requested the change."}
+  - {p: trend, label: supports, claim: "MW04 PFOS plus PFHxS fell from 12.4 ug/L to 9.8 ug/L between rounds."}
+  - {p: trend, label: supports, claim: "All six off-site surface water points were non-detect for PFOS and PFHxS."}
+  - {p: trend, label: contradicts, claim: "MW04 PFOS plus PFHxS increased in Round 2."}
+  - {p: trend, label: contradicts, claim: "MW04 is now below the 0.07 ug/L screening value."}
+  - {p: trend, label: unsupported, claim: "The plume has been delineated to the east."}
+  - {p: rpd, label: supports, claim: "A review of the cause is expected when duplicate results differ by more than 30%."}
+  - {p: rpd, label: supports, claim: "Primary and duplicate results are compared as a relative percent difference of their mean."}
+  - {p: rpd, label: contradicts, claim: "A review is only needed when duplicates differ by more than 50%."}
+  - {p: rpd, label: unsupported, claim: "Laboratory blanks must be below the limit of reporting."}
+  - {p: rpd, label: unsupported, claim: "Duplicates should be collected at a rate of one in twenty samples."}

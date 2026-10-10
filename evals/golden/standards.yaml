@@ -1,0 +1,117 @@
+# Standards questions. gold = where the answer lives (doc, PDF pages, phrase that must appear on those pages).
+# must_contain: list of groups; each group is a list of alternatives (any one must appear in the answer).
+- id: s01
+  query: What is the health investigation level for arsenic in residential soil with garden access?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [53], phrase: "Arsenic2 100 500 300 3 000"}]
+  must_contain: [["100"]]
+- id: s02
+  query: What is the HIL D value for lead in commercial and industrial soil?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [53], phrase: "Lead3 300 1200 600 1 500"}]
+  must_contain: [["1500", "1 500"]]
+- id: s03
+  query: What is the residential A health investigation level for cadmium?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [53], phrase: "Cadmium 20 150 90 900"}]
+  must_contain: [["20"]]
+- id: s04
+  query: What is the HIL for carcinogenic PAHs as benzo(a)pyrene TEQ in residential A land use?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [53], phrase: "(as BaP TEQ)6"}]
+  must_contain: [["3"]]
+- id: s05
+  query: What is the screening level for bonded ACM in residential A soil?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [35], phrase: "Bonded ACM 0.01% 0.04% 0.02% 0.05%"}]
+  must_contain: [["0.01%", "0.01 %"]]
+- id: s06
+  query: What screening level applies to fibrous asbestos and asbestos fines in soil?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [35], phrase: "FA and AF5 (friable asbestos) 0.001%"}]
+  must_contain: [["0.001%", "0.001 %"]]
+- id: s07
+  query: Are health investigation levels intended to be clean-up levels?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [10], phrase: "HILs are not intended to be clean-up levels"}]
+  must_contain: [["not"], ["clean-up", "clean up", "cleanup"]]
+- id: s08
+  query: To what depth of soil do HILs generally apply for residential use?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [10], phrase: "HILs apply generally to the top 3 m of soil for residential use"}]
+  must_contain: [["3 m", "3m", "three metres"]]
+- id: s09
+  query: Which land use does HIL A cover?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [9, 54], phrase: "residential with garden/accessible soil"}]
+  must_contain: [["residential"], ["garden"]]
+- id: s10
+  query: How do the HSL soil types sand, silt and clay relate to the soil classification in AS 1726?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [14], phrase: "HSL classifications of sand, silt and clay"}]
+  must_contain: [["1726"]]
+- id: s11
+  query: How is a site-specific ecological investigation level (EIL) calculated?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [49, 19], phrase: "Determine site EILs (EIL = ABC + ACL)"}]
+  must_contain: [["abc", "ambient background"], ["acl", "added contaminant"]]
+- id: s12
+  query: What are petroleum hydrocarbon management limits applicable to?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [9], phrase: "are applicable to petroleum hydrocarbon compounds only"}]
+  must_contain: [["petroleum hydrocarbon"]]
+- id: s13
+  query: What is the data quality objectives process described in the site characterisation guideline?
+  expected_route: standards
+  gold: [{doc: nepm-b2, pages: [121, 8], phrase: "Step 1: State the problem"}]
+  must_contain: [["seven", "7"]]
+- id: s14
+  query: When should the cause of a primary and duplicate sample difference be reviewed?
+  expected_route: standards
+  gold: [{doc: nepm-b3, pages: [21, 18], phrase: "greater than 30% difference"}]
+  must_contain: [["30%", "30 %"]]
+- id: s15
+  query: What do the laboratory analysis guidelines say about holding times and sample containers?
+  expected_route: standards
+  gold: [{doc: nepm-b3, pages: [29], phrase: "maximum holding times"}]
+  must_contain: [["holding time"]]
+- id: s16
+  query: How are groundwater investigation levels defined?
+  expected_route: standards
+  gold: [{doc: nepm-b6, pages: [5], phrase: "Groundwater investigation levels (GILs) are defined as"}]
+  must_contain: [["investigation"]]
+- id: s17
+  query: What are the tiers in the tiered approach to site-specific health risk assessment?
+  expected_route: standards
+  gold: [{doc: nepm-b4, pages: [19, 20, 21, 9], phrase: "Tier 3"}]
+  must_contain: [["tier 1", "tier 2"]]
+- id: s18
+  query: What is the difference between a preliminary and a definitive ecological risk assessment?
+  expected_route: standards
+  gold: [{doc: nepm-b5a, pages: [8, 9, 10, 11, 12, 3], phrase: "Preliminary ERA"}]
+  must_contain: [["preliminary"], ["definitive"]]
+- id: s19
+  query: Is it acceptable to set the grid size for sampling purely from a mathematical formula?
+  expected_route: standards
+  gold: [{doc: nepm-b2, pages: [32], phrase: "is not an acceptable approach without consideration of likely contaminant distribution"}]
+  must_contain: [["not"]]
+- id: s20
+  query: What is the residential A HIL for inorganic mercury?
+  expected_route: standards
+  gold: [{doc: nepm-b1, pages: [53], phrase: "Mercury (inorganic)"}]
+  must_contain: [["40"]]
+- id: u01
+  query: What is the PFOS drinking water guideline value in the PFAS National Environmental Management Plan?
+  expected_route: standards
+  answerable: false
+  tags: [unanswerable, pfas]
+- id: u02
+  query: What is the health investigation level for PFOS in residential soil?
+  expected_route: standards
+  answerable: false
+  tags: [unanswerable, pfas]
+- id: u03
+  query: What does the NEPM say about PFAS screening levels for fish and shellfish consumption?
+  expected_route: standards
+  answerable: false
+  tags: [unanswerable, pfas]

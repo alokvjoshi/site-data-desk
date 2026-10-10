@@ -1,0 +1,32 @@
+- id: n01
+  query: Which projects are over budget?
+  expected_route: insights
+  must_contain: [["brightwater"]]
+- id: n02
+  query: Which project milestones have been delayed?
+  expected_route: insights
+  must_contain: [["halden"]]
+- id: n03
+  query: Which decisions have been reversed across the projects?
+  expected_route: insights
+  must_contain: [["limestone", "ironbark"]]
+- id: n04
+  query: Which projects carry a high risk?
+  expected_route: insights
+  must_contain: [["marlin"]]
+- id: n05
+  query: Give me a digest of all projects.
+  expected_route: insights
+  must_contain: [["halden", "marlin", "brightwater", "ironbark"]]
+- id: n06
+  query: Which projects still have open exceedances?
+  expected_route: insights
+  must_contain: [["marlin", "ironbark"]]
+- id: n07
+  query: What is the budget of the Marlin Bay project?
+  expected_route: insights
+  must_contain: [["698000", "698,000"]]
+- id: n08
+  query: Who is managing the Brightwater project and what is its status?
+  expected_route: insights
+  must_contain: [["priya"]]

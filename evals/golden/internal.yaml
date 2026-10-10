@@ -1,0 +1,114 @@
+- id: i01
+  query: How much soil was excavated at Halden Road, and was the figure ever corrected?
+  expected_route: internal
+  tags: [correction]
+  gold: [{doc: email-p1-012, phrase: "The surveyed volume removed is 2,860 m3"}]
+  must_contain: [["2860", "2,860"]]
+- id: i02
+  query: Who approved the remedial action plan option for Halden Road and what was approved?
+  expected_route: internal
+  gold: [{doc: email-p1-008, phrase: "Approved: option A"}]
+  must_contain: [["leila"], ["excavat"]]
+- id: i03
+  query: When was validation sampling completed at Halden Road?
+  expected_route: internal
+  tags: [contradiction]
+  gold: [{doc: email-p1-016, phrase: "Validation sampling was completed on 25 September 2026"}, {doc: slack-p1-2026-09, phrase: "wrapped up today (24th)"}]
+  must_contain: [["25 september", "september 25", "2026-09-25"], ["24"]]
+- id: i04
+  query: What was the highest PFOS plus PFHxS concentration found in groundwater in Round 1 at Marlin Bay?
+  expected_route: internal
+  gold: [{doc: email-p2-005, phrase: "PFOS + PFHxS = 12.4 ug/L"}]
+  must_contain: [["12.4"]]
+- id: i05
+  query: How did MW04 change between Round 1 and Round 2 at Marlin Bay?
+  expected_route: internal
+  gold: [{doc: email-p2-012, phrase: "MW04 PFOS + PFHxS = 9.8 ug/L"}]
+  must_contain: [["9.8"], ["12.4"]]
+- id: i06
+  query: How much was the Marlin Bay scope variation and what was it for?
+  expected_route: internal
+  gold: [{doc: email-p2-009, phrase: "Cost A$78,000"}]
+  must_contain: [["78000", "78,000"], ["surface water"]]
+- id: i07
+  query: What caused the field blank detect in Round 2 at Marlin Bay?
+  expected_route: internal
+  gold: [{doc: email-p2-014, phrase: "contaminated lot of sample bottles"}]
+  must_contain: [["bottle"]]
+- id: i08
+  query: What was the final volume of ACM-impacted fill removed at Brightwater Estate Stage 3?
+  expected_route: internal
+  tags: [near_duplicate]
+  gold: [{doc: email-p3-011, phrase: "Final surveyed volume removed: 1,150 m3"}, {doc: report-p3-v2, phrase: "1,150 m3"}]
+  must_contain: [["1150", "1,150"]]
+- id: i09
+  query: What was the maximum bonded ACM concentration at Brightwater and where was it?
+  expected_route: internal
+  gold: [{doc: email-p3-003, phrase: "TP22 at 0.03% w/w"}]
+  must_contain: [["0.03"], ["tp22"]]
+- id: i10
+  query: Is the Brightwater project over budget, and by how much?
+  expected_route: internal
+  gold: [{doc: email-p3-015, phrase: "A$988,000 against the A$940,000 budget"}]
+  must_contain: [["988000", "988,000"], ["940000", "940,000"]]
+- id: i11
+  query: Was the lime dosing decision at Ironbark ever reversed?
+  expected_route: internal
+  tags: [reversal]
+  gold: [{doc: email-p4-008, phrase: "replace lime dosing with crushed limestone"}]
+  must_contain: [["limestone"], ["revers"]]
+- id: i12
+  query: What pH did the Ironbark treatment pond reach during the overdosing incident?
+  expected_route: internal
+  gold: [{doc: email-p4-007, phrase: "Pond pH hit 10.8"}]
+  must_contain: [["10.8"]]
+- id: i13
+  query: What dissolved aluminium result was found at MW05 at Ironbark?
+  expected_route: internal
+  gold: [{doc: email-p4-012, phrase: "Dissolved aluminium at MW05 was 1.8 mg/L"}]
+  must_contain: [["1.8"]]
+- id: i14
+  query: What lead concentration was found at TP14 at Halden Road?
+  expected_route: internal
+  gold: [{doc: email-p1-004, phrase: "lead = 2,300 mg/kg"}]
+  must_contain: [["2300", "2,300"]]
+- id: i15
+  query: Who is the project manager for the Ironbark monitoring project?
+  expected_route: internal
+  gold: [{doc: p4-ironbark-gme, phrase: "Marcus Oyelaran"}]
+  must_contain: [["marcus"]]
+- id: b01
+  query: Is the lead result at Halden Road TP14 above the commercial and industrial health investigation level, and what is that level?
+  expected_route: both
+  gold: [{doc: email-p1-005, phrase: "exceeds the commercial/industrial HIL D of 1,500 mg/kg"}, {doc: nepm-b1, pages: [53], phrase: "Lead3 300 1200 600 1 500"}]
+  must_contain: [["2300", "2,300"], ["1500", "1,500"]]
+- id: b02
+  query: How does the maximum bonded ACM at Brightwater TP22 compare with the NEPM residential A screening level?
+  expected_route: both
+  gold: [{doc: email-p3-003, phrase: "TP22 at 0.03% w/w"}, {doc: nepm-b1, pages: [35], phrase: "Bonded ACM 0.01% 0.04% 0.02% 0.05%"}]
+  must_contain: [["0.03"], ["0.01"]]
+- id: u04
+  query: Who is the independent site auditor for the Brightwater project?
+  expected_route: internal
+  answerable: false
+  tags: [unanswerable]
+- id: u05
+  query: What is the name of the client's solicitor on the Halden Road project?
+  expected_route: internal
+  answerable: false
+  tags: [unanswerable]
+- id: u06
+  query: What is the company's forecast revenue for 2027?
+  expected_route: internal
+  answerable: false
+  tags: [unanswerable]
+- id: u07
+  query: What was the cost of the crushed limestone used at Ironbark?
+  expected_route: internal
+  answerable: false
+  tags: [unanswerable]
+- id: u08
+  query: What did the regulator conclude after reviewing the Marlin Bay interim report?
+  expected_route: internal
+  answerable: false
+  tags: [unanswerable]

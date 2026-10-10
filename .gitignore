@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+__pycache__/
+.venv/
+*.pyc
+corpus/local/
+corpus/cache/
+.vercel/
+supabase/.temp/
+.DS_Store
+vault/.obsidian/workspace*.json
+vault/.obsidian/cache

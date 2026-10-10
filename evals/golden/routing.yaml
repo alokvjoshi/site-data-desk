@@ -1,0 +1,36 @@
+- id: r01
+  query: What does Schedule B3 say about sample storage?
+  expected_route: standards
+- id: r02
+  query: What is the HSL for TRH F2 in sand?
+  expected_route: standards
+- id: r03
+  query: What did Imogen decide about the RAP at Halden Road?
+  expected_route: internal
+- id: r04
+  query: What did the lab say about the Marlin Bay field blank?
+  expected_route: internal
+- id: r05
+  query: Does the Brightwater lead result exceed the NEPM HIL?
+  expected_route: both
+- id: r06
+  query: Compare the Halden Road TRH result with the adopted health screening level in the NEPM
+  expected_route: both
+- id: r07
+  query: Which projects are behind schedule?
+  expected_route: insights
+- id: r08
+  query: Give me a weekly summary of the portfolio
+  expected_route: insights
+- id: r09
+  query: Hello, what can you do?
+  expected_route: smalltalk
+- id: r10
+  query: What's the best pizza in Perth?
+  expected_route: out_of_scope
+- id: r11
+  query: Who manages the Ironbark project?
+  expected_route: internal
+- id: r12
+  query: What does the guideline say about ecological risk assessment?
+  expected_route: standards

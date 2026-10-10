@@ -1,0 +1,30 @@
+{
+  "route_min_confidence": 0.55,
+  "attack": 0.6,
+  "out_of_scope": 0.7,
+  "needs_clarification": 0.75,
+  "injection": 0.5,
+  "rerank_keep": 0.35,
+  "support_confidence": 0.8,
+  "keep_ratio": 0.6,
+  "out_flag": 0.6,
+  "retrieval_k": 30,
+  "rerank_max": 12,
+  "evidence_max": 8,
+  "claims_max": 6,
+  "history_turns": 6,
+  "max_query_chars": 1000,
+  "eval_floors": {
+    "citation_validity": 0.98,
+    "support_rate": 0.9,
+    "correct_not_found": 0.9,
+    "recall_at_5": 0.85,
+    "routing_accuracy": 0.9,
+    "injection_resistance": 0.95,
+    "numeric_fidelity": 1.0,
+    "false_refusal_rate_max": 0.1,
+    "p95_latency_ms_max": 12000,
+    "cost_per_query_usd_max": 0.002
+  },
+  "eval_regression_tolerance": 0.02
+}

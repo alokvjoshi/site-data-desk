@@ -1,0 +1,95 @@
+{
+ "ACM": [
+  "asbestos containing material",
+  "asbestos-containing material",
+  "bonded asbestos"
+ ],
+ "AF": [
+  "asbestos fines"
+ ],
+ "ASS": [
+  "acid sulfate soils",
+  "acid sulphate soils"
+ ],
+ "ASSMP": [
+  "acid sulfate soils management plan",
+  "acid sulphate soil management plan"
+ ],
+ "BTEXN": [
+  "benzene toluene ethylbenzene xylene naphthalene"
+ ],
+ "BaP TEQ": [
+  "benzo(a)pyrene toxic equivalent",
+  "carcinogenic PAHs"
+ ],
+ "CSM": [
+  "conceptual site model"
+ ],
+ "DSI": [
+  "detailed site investigation"
+ ],
+ "EIL": [
+  "ecological investigation level",
+  "ecological investigation levels"
+ ],
+ "ESL": [
+  "ecological screening level",
+  "ecological screening levels"
+ ],
+ "FA": [
+  "fibrous asbestos"
+ ],
+ "GME": [
+  "groundwater monitoring event",
+  "groundwater monitoring"
+ ],
+ "HIL": [
+  "health investigation level",
+  "health investigation levels"
+ ],
+ "HSL": [
+  "health screening level",
+  "health screening levels"
+ ],
+ "PAH": [
+  "polycyclic aromatic hydrocarbons"
+ ],
+ "PFAS": [
+  "per- and polyfluoroalkyl substances",
+  "forever chemicals"
+ ],
+ "PFHxS": [
+  "perfluorohexane sulfonate"
+ ],
+ "PFOA": [
+  "perfluorooctanoic acid"
+ ],
+ "PFOS": [
+  "perfluorooctane sulfonate",
+  "perfluorooctane sulfonic acid"
+ ],
+ "PSI": [
+  "preliminary site investigation"
+ ],
+ "QA/QC": [
+  "quality assurance and quality control"
+ ],
+ "RAP": [
+  "remedial action plan",
+  "remediation action plan"
+ ],
+ "RPD": [
+  "relative percent difference"
+ ],
+ "SAQP": [
+  "sampling and analysis quality plan"
+ ],
+ "TRH": [
+  "total recoverable hydrocarbons",
+  "total petroleum hydrocarbons",
+  "TPH"
+ ],
+ "w/w": [
+  "weight for weight"
+ ]
+}

@@ -101,7 +101,7 @@ def convert(doc: dict) -> Path:
         "type": "standard",
         "title": doc["title"],
         "short": doc["short"],
-        "date": "2013-05-15",
+        "date": doc.get("date", "2013-05-15"),
         "source_type": "standard",
         "publisher": doc["publisher"],
         "source_url": doc["url"],
@@ -109,7 +109,7 @@ def convert(doc: dict) -> Path:
         "licence_source": doc.get("licence_source", ""),
         "fictional": False,
         "pages": len(reader.pages),
-        "tags": ["standard", "contaminated-land", "nepm"],
+        "tags": doc.get("tags", ["standard", "contaminated-land", "nepm"]),
     }
     attribution = (
         f"> Source: {doc['publisher']}. Licensed under {doc['licence']}. "
@@ -133,7 +133,7 @@ def main() -> None:
     args = ap.parse_args()
     docs = yaml.safe_load((ROOT / "corpus/manifest.yaml").read_text())["documents"]
     for d in docs:
-        if args.only and d["id"] != args.only:
+        if d.get("format") == "docx" or (args.only and d["id"] != args.only):
             continue
         if not d.get("public") and not args.include_local:
             continue

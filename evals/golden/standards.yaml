@@ -100,6 +100,36 @@
   expected_route: standards
   gold: [{doc: nepm-b1, pages: [53], phrase: "Mercury (inorganic)"}]
   must_contain: [["40"]]
+- id: p01
+  query: What is the maximum duration of an EPA Victoria pilot project licence for a pilot-scale PFAS soil treatment study?
+  expected_route: standards
+  tags: [pfas]
+  gold: [{doc: epa-vic-3010, phrase: "the maximum duration of a pilot project licence is five years"}]
+  must_contain: [["five", "5 year"]]
+- id: p02
+  query: Why should PFAS mass balance be considered when validating soil treatment?
+  expected_route: standards
+  tags: [pfas]
+  gold: [{doc: epa-vic-3010, phrase: "transform into different PFAS"}]
+  must_contain: [["mass"], ["transform", "by-product", "different media", "phases"]]
+- id: p03
+  query: What is the preferred treatment hierarchy for PFAS-contaminated material?
+  expected_route: standards
+  tags: [pfas]
+  gold: [{doc: epa-vic-3010, phrase: "The preferred treatment hierarchy starts with treatment of the PFAS-contaminated material"}]
+  must_contain: [["destroy"]]
+- id: p04
+  query: How should the technology readiness of a PFAS soil treatment option be assessed?
+  expected_route: standards
+  tags: [pfas]
+  gold: [{doc: epa-vic-3010, phrase: "technology readiness level (TRL)"}]
+  must_contain: [["trl", "technology readiness"]]
+- id: p05
+  query: What scales of treatability study are used to progress PFAS soil treatment from the laboratory to full scale?
+  expected_route: standards
+  tags: [pfas]
+  gold: [{doc: epa-vic-3010, phrase: "from laboratory/bench-scale to pilot-scale to full-scale"}]
+  must_contain: [["bench"], ["pilot"], ["full"]]
 - id: u01
   query: What is the PFOS drinking water guideline value in the PFAS National Environmental Management Plan?
   expected_route: standards

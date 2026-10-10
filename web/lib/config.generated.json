@@ -1,5 +1,5 @@
 {
- "version": "b41f501aea",
+ "version": "2cc45c0c06",
  "thresholds": {
   "route_min_confidence": 0.55,
   "attack": 0.6,
@@ -31,9 +31,9 @@
   "eval_regression_tolerance": 0.02
  },
  "prices": {
-  "note": "Provisional. Check https://openrouter.ai/deepseek/deepseek-v4-flash-20260731 before relying on these.",
-  "llm_in_per_million_usd": 0.04,
-  "llm_out_per_million_usd": 0.08,
+  "note": "From https://openrouter.ai/api/v1/models on 2026-10-11 for deepseek/deepseek-v4.1-flash. Re-check before relying on them.",
+  "llm_in_per_million_usd": 0.3,
+  "llm_out_per_million_usd": 1.2,
   "jev_per_request_usd": 0
  },
  "glossary": {

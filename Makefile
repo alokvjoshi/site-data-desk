@@ -9,7 +9,7 @@ seed:             ## regenerate the fictional company vault (deterministic)
 	$(PY) seed/generate.py
 
 standards:        ## convert the manifest's public PDFs into vault/standards (needs corpus/cache/*.pdf)
-	$(PY) ingest/pdf_to_md.py
+	$(PY) ingest/pdf_to_md.py && $(PY) ingest/docx_to_md.py
 
 sync:             ## vault -> Supabase (documents, chunks, embeddings, facts) + web/public/graph.json
 	$(PY) ingest/sync.py

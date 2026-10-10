@@ -143,18 +143,21 @@ def current_section(text: str, previous: str | None) -> str | None:
 def chunk_standard(note: Note) -> list[Chunk]:
     title = note.meta.get("short") or note.meta["title"]
     parts = PAGE_RE.split(note.body)
-    # parts: [preamble, page1, text1, page2, text2, ...]
+    # parts: [preamble, page1, text1, page2, text2, ...]. Documents without page markers (Word files) are one
+    # "page" with page=None and are cited by section instead.
+    if len(parts) == 1:
+        parts = ["", "0", note.body]
     chunks: list[Chunk] = []
     section: str | None = None
     ord_ = 0
     for k in range(1, len(parts), 2):
-        page = int(parts[k])
+        page = int(parts[k]) or None
         text = parts[k + 1]
         start_section = section
         for piece in pack(split_blocks(text)):
             sec = current_section(piece, start_section)
             start_section = sec
-            body = f"[{title} - p.{page}" + (f" - {sec}" if sec else "") + f"]\n\n{piece}"
+            body = f"[{title}" + (f" - p.{page}" if page else "") + (f" - {sec}" if sec else "") + f"]\n\n{piece}"
             chunks.append(Chunk(ord=ord_, content=body, page=page, section=sec))
             ord_ += 1
         section = current_section(text, section)

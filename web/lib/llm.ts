@@ -19,7 +19,7 @@ interface ToolCallArgs<T> {
 export async function callTool<T>(ctx: RunContext, a: ToolCallArgs<T>): Promise<T | null> {
   const key = ctx.opts.llmKey ?? optEnv("OPENROUTER_API_KEY");
   if (!key) return null;
-  const model = optEnv("OPENROUTER_MODEL") ?? "deepseek/deepseek-v4-flash";
+  const model = optEnv("OPENROUTER_MODEL") ?? "deepseek/deepseek-v4.1-flash";
   if (ctx.current) ctx.current.model = model;
   const parameters = z.toJSONSchema(a.schema) as Record<string, unknown>;
   delete parameters.$schema;

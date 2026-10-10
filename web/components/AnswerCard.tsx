@@ -73,7 +73,7 @@ export function AnswerCard({ answer, threadId, onOpenSource }: { answer: Answer;
               <button onClick={() => open(s.n)} className="text-left hover:underline">
                 <span className="mr-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded bg-accentsoft px-1 text-[11px] font-semibold text-accent">{s.n}</span>
                 <span>{s.title}</span>
-                <span className="text-muted">{s.page ? ` · PDF p.${s.page}` : ""}{s.date ? ` · ${s.date}` : ""}</span>
+                <span className="text-muted">{s.page ? ` · PDF p.${s.page}` : s.section ? ` · ${s.section}` : ""}{s.date ? ` · ${s.date}` : ""}</span>
               </button>
             </li>
           ))}

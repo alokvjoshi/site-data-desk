@@ -2,7 +2,7 @@
 
 A cited-answer assistant for environmental consultancies. Ask what a contaminated-land standard says, or what happened on a project, and every statement in the answer is checked against a quoted source before you see it. If the sources don't support an answer, you get **not found**, not a guess.
 
-- **Standards:** NEPM Assessment of Site Contamination Schedules B1, B2, B3, B4, B5a and B6, from the Federal Register of Legislation (CC BY 4.0), with page-level citations.
+- **Standards:** NEPM Assessment of Site Contamination Schedules B1, B2, B3, B4, B5a and B6 (Federal Register of Legislation, CC BY 4.0) with page-level citations, plus EPA Victoria Publication 3010 on validating PFAS soil treatment (CC BY 4.0, cited by section).
 - **Company knowledge:** a small *fictional* consultancy (Kestrel Environmental Group): four projects, 60 emails, 40 Slack messages, 8 reports, with planted traps (corrections, contradictions, a prompt-injection email, a near-duplicate report, a reversed decision).
 - **Leadership view:** portfolio cards and a weekly digest where every number is verified against the project data.
 - **Everything is traced, checkpointed and evaluated.** Open "How was this answered?" under any answer.
@@ -106,7 +106,7 @@ PRD.md      the product requirements document
 - Standards tables are extracted as text rows, so complex tables can lose structure. Always check the original.
 - Page numbers are PDF page indexes, not the printed numbers.
 - Answers are verified before display, so there is no token-by-token streaming of the final answer; progress is streamed instead.
-- The PFAS NEMP is not included: its reuse licence is unverified. Drop the PDF into `corpus/local/` and run `make sync` with `--include-local` against your own database to use it.
+- The PFAS NEMP is not included (its reuse licence is unverified, and the publisher's server was unreachable); EPA Victoria Publication 3010 covers PFAS treatment but not screening values. Drop the PDF into `corpus/local/` and run `make sync` with `--include-local` against your own database to use it.
 - The Jev judge is calibrated on 30 pairs; treat its agreement metric as an indication, not a guarantee.
 
 ## Licences

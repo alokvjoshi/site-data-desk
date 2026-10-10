@@ -77,6 +77,22 @@ documents:
     licence_verified: true
     verified_on: 2026-10-11
     public: true
+  - id: epa-vic-3010
+    title: "EPA Victoria Publication 3010 - Technical guide: Validation of PFAS soil treatment technologies (April 2024)"
+    short: "EPA Vic Pub 3010 (PFAS soil treatment)"
+    publisher: "EPA Victoria (State Government of Victoria)"
+    url: "https://www.epa.vic.gov.au/sites/default/files/2025-05/3010-pfas-soil-treatment-guidance.docx"
+    format: docx
+    date: "2024-04-01"
+    tags: [standard, pfas, remediation, epa-victoria]
+    file: corpus/cache/epa-vic-3010.docx
+    sha256: 1de2418eaff0292e9de1e64a38c2ea5b9c3ae452da395145bae59b4d6cf1fb23
+    licence: "CC BY 4.0"
+    licence_source: "https://www.epa.vic.gov.au/copyright"
+    licence_note: "Site-wide statement: all material on epa.vic.gov.au is CC BY 4.0 except images/branding and third-party content. The document itself carries no separate licence text."
+    licence_verified: true
+    verified_on: 2026-10-11
+    public: true
   # --- opt-in, NOT in the public demo until the licence is read from the publisher's own page ---
   - id: pfas-nemp-3
     title: "PFAS National Environmental Management Plan (NEMP) Version 3.0 (a 3.1 may supersede it)"

@@ -265,9 +265,15 @@ const verify = async (s: S): Promise<U> => need(s.runId).step("verify", async (r
   rec.input({ claims: claims.length });
   const results = await Promise.all(claims.map(async (c, idx): Promise<{ ok: boolean; claim: Claim; reason?: string }> => {
     const claim: Claim = { id: idx + 1, text: c.text.trim(), evidence: c.evidence, quote: c.quote.trim() };
-    const e = ev.find((x) => x.n === c.evidence);
+    let e = ev.find((x) => x.n === c.evidence);
+    if (!e || !quoteFound(e.content, c.quote)) {
+      // The model sometimes cites the wrong passage number. If the quote is verbatim in another retrieved passage,
+      // re-attribute the claim there; it is then verified against that passage like any other.
+      const alt = ev.find((x) => quoteFound(x.content, c.quote));
+      if (alt) { e = alt; claim.evidence = alt.n; }
+    }
     if (!e) return { ok: false, claim, reason: "cites a passage that does not exist" };
-    if (!quoteFound(e.content, c.quote)) return { ok: false, claim, reason: "quote not found verbatim in the cited passage" };
+    if (!quoteFound(e.content, c.quote)) return { ok: false, claim, reason: "quote not found verbatim in any retrieved passage" };
     const missing = missingNumbers(c.text, e.content);
     if (missing.length) return { ok: false, claim, reason: `number(s) not in the cited passage: ${missing.join(", ")}` };
     const j = await judge(ctx, "support", { claim: c.text, passage: { source: e.doc_title, date: e.doc_date, text: e.content.slice(0, 2400) } }, { support: SUPPORT });

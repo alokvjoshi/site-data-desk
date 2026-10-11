@@ -24,7 +24,7 @@ export async function callTool<T>(ctx: RunContext, a: ToolCallArgs<T>): Promise<
   const parameters = z.toJSONSchema(a.schema) as Record<string, unknown>;
   delete parameters.$schema;
   const messages: { role: string; content: string }[] = [
-    { role: "system", content: a.system },
+    { role: "system", content: `${a.system}\n\nRespond with ONLY a JSON object that matches this JSON Schema (no prose, no markdown fences):\n${JSON.stringify(parameters)}` },
     { role: "user", content: a.user },
   ];
   let lastError = "";
@@ -42,8 +42,8 @@ export async function callTool<T>(ctx: RunContext, a: ToolCallArgs<T>): Promise<
         messages,
         temperature: 0,
         max_tokens: a.maxTokens ?? 1500,
-        tools: [{ type: "function", function: { name: a.toolName, description: a.toolDescription, parameters } }],
-        tool_choice: { type: "function", function: { name: a.toolName } },
+        // Native structured output: this model emitted raw tool-call markup as text when tool calling was forced.
+        response_format: { type: "json_schema", json_schema: { name: a.toolName, strict: false, schema: parameters } },
       }),
       signal: AbortSignal.timeout(40000),
     });
@@ -58,16 +58,17 @@ export async function callTool<T>(ctx: RunContext, a: ToolCallArgs<T>): Promise<
     };
     ctx.addLlmUsage(json.usage?.prompt_tokens ?? 0, json.usage?.completion_tokens ?? 0);
     const msg = json.choices?.[0]?.message;
-    const raw = msg?.tool_calls?.[0]?.function?.arguments ?? msg?.content ?? "";
+    const raw = msg?.content ?? msg?.tool_calls?.[0]?.function?.arguments ?? "";
     try {
-      const parsed = a.schema.safeParse(JSON.parse(raw.replace(/^```(?:json)?\s*|\s*```$/g, "")));
+      const body = raw.includes("{") ? raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1) : raw;
+      const parsed = a.schema.safeParse(JSON.parse(body));
       if (parsed.success) return parsed.data;
       lastError = parsed.error.message.slice(0, 400);
     } catch (e) {
       lastError = `invalid JSON: ${(e as Error).message}`;
     }
     messages.push({ role: "assistant", content: raw.slice(0, 2000) });
-    messages.push({ role: "user", content: `Your previous output was invalid (${lastError}). Call ${a.toolName} again with valid arguments only.` });
+    messages.push({ role: "user", content: `Your previous output was invalid (${lastError}). Reply again with only the valid JSON object.` });
   }
   if (ctx.current) ctx.current.degrade(`model output invalid: ${lastError}`);
   return null;

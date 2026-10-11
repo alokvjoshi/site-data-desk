@@ -65,6 +65,14 @@ describe("QA graph", () => {
     expect(reasons).toMatch(/number/);
   });
 
+  it("re-attributes a claim whose quote is verbatim in a different retrieved passage", async () => {
+    mocks.draft = { not_found: false, claims: [{ text: "The surveyed volume removed is 2,860 m3.", evidence: 1, quote: "The surveyed volume removed is 2,860 m3" }] };
+    const { answer } = await ask("How much soil was removed at Halden Road in total?");
+    expect(answer.status).toBe("ok");
+    expect(answer.sources[0].docId).toBe("email-p1-012");
+    expect(answer.claims[0].evidence).toBe(2);
+  });
+
   it("returns not_found when the model says the evidence does not answer", async () => {
     mocks.draft = { not_found: true, reason: "No passage states a PFOS value.", claims: [] };
     const { answer } = await ask("What is the PFOS drinking water guideline?");

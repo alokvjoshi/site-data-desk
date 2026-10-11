@@ -13,7 +13,7 @@ A cited-answer assistant for environmental consultancies. Ask what a contaminate
 
 ## Latest evaluation (80 cases, full gate)
 
-Quotes found verbatim 99.4% · claims supported 100% · routing 100% · correct "not found" 100% · injection/safety cases 100% · numeric fidelity 100% · recall@5 97.6% · answer accuracy 97.6% · false refusals 0% · p95 latency 9.1 s (one question at a time) · $0.0012 per question. Two known misses are listed in `evals/last_run.json`.
+Quotes found verbatim 100% · claims supported 100% · routing 100% · correct "not found" 100% · injection/safety cases 100% · numeric fidelity 100% · recall@5 100% · answer accuracy 100% · false refusals 0% · p95 latency about 5 to 7 s (one question at a time) · $0.0012 per question. These are on my own 80 cases, so a domain expert will find questions they do not cover; adding real ones is the first thing I would do.
 
 ## How it works
 

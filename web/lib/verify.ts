@@ -20,7 +20,25 @@ export function quoteFound(text: string, quote: string): boolean {
   return normalize(text).includes(q);
 }
 
-const NUM_RE = /\d[\d,]*(?:\.\d+)?/g;
+const WORD_RE = /[a-z0-9%<>]+(?:\.[0-9]+)*/gi;
+
+/**
+ * Word-exact fallback for quotes that differ from the source only in punctuation or spacing (a dropped comma or
+ * bracket). Every word and number must still match, in order, contiguously. Returns the exact source span, which
+ * replaces the model's quote so what is displayed and highlighted is always verbatim.
+ */
+export function snapQuote(text: string, quote: string): string | null {
+  const q = (quote.toLowerCase().match(WORD_RE) ?? []);
+  if (q.length < 5 || /…|\.\.\./.test(quote)) return null;
+  const toks = [...text.matchAll(WORD_RE)].map((m) => ({ w: m[0].toLowerCase(), start: m.index!, end: m.index! + m[0].length }));
+  for (let i = 0; i + q.length <= toks.length; i++) {
+    if (toks[i].w !== q[0]) continue;
+    if (q.every((w, k) => toks[i + k].w === w)) return text.slice(toks[i].start, toks[i + q.length - 1].end);
+  }
+  return null;
+}
+
+const NUM_RE =/\d[\d,]*(?:\.\d+)?/g;
 
 export function numbersIn(s: string): string[] {
   return (s.match(NUM_RE) ?? []).map((n) => n.replace(/,/g, "").replace(/\.$/, ""));

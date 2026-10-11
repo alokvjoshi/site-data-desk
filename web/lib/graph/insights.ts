@@ -12,8 +12,9 @@ import type { Removed, Source } from "../types";
 export const AS_OF = process.env.INSIGHTS_AS_OF ?? "2026-10-11";
 
 export const INSIGHT_TOOLS = {
-  portfolio_status: "Overall status, budget and progress of all projects or one project.",
-  exceedances: "Results that exceed criteria: which analytes, where, and whether they are resolved.",
+  portfolio_status: "Project status, budget and spend (including which projects are over budget or under budget) and overall progress, for all projects or one project.",
+  open_exceedances: "Only for questions about contamination exceedances (analyte results above a criterion) that are still open or unresolved. Not about budget, schedule or decisions.",
+  exceedances: "All exceedances, open and closed, with their status.",
   milestones_risks: "Delayed or open milestones and registered risks.",
   decisions_log: "Decisions taken, who approved them, and any that were reversed.",
   weekly_digest: "A short digest across projects: status, delays, open exceedances, risks, reversals.",
@@ -63,7 +64,7 @@ export function buildRows(plan: InsightPlan, facts: Facts): InsightRow[] {
     const title = f.title as string;
     const status = (): InsightRow => ({ ref: `${pid}.status`, project: pid, title, status: f.status, budget_aud: f.budget_aud, committed_aud: f.committed_aud, client: f.client, project_manager: f.project_manager });
     const exc = (onlyOpen: boolean) => (f.exceedances ?? []).forEach((x: any, i: number) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-      if (!onlyOpen || isOpenExceedance(x.status)) rows.push({ ref: `${pid}.exceedances[${i}]`, project: pid, title, ...x });
+      if (!onlyOpen || isOpenExceedance(x.status)) rows.push({ ref: `${pid}.exceedances[${i}]`, project: pid, title, ...x, open: isOpenExceedance(x.status) });
     });
     const miles = (onlyProblems: boolean) => (f.milestones ?? []).forEach((m: any, i: number) => { // eslint-disable-line @typescript-eslint/no-explicit-any
       const delayed = (m.done && m.done > m.due) || (!m.done && m.due < AS_OF);
@@ -77,6 +78,7 @@ export function buildRows(plan: InsightPlan, facts: Facts): InsightRow[] {
     });
     switch (plan.tool) {
       case "portfolio_status": rows.push(status()); miles(false); break;
+      case "open_exceedances": exc(true); break;
       case "exceedances": exc(false); break;
       case "milestones_risks": miles(true); risks(true); break;
       case "decisions_log": decisions(true); break;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { highlightRange, missingNumbers, normalize, quoteFound } from "./verify";
+import { highlightRange, missingNumbers, normalize, quoteFound, snapQuote } from "./verify";
 
 describe("quoteFound", () => {
   const text = "**From:** Imogen  \nThe surveyed volume removed is 2,860 m3. This lowers the disposal cost by approximately A$96k.";
@@ -40,5 +40,20 @@ describe("highlightRange", () => {
     const r = highlightRange(p, "the value is 12.4 ug/L");
     expect(r).not.toBeNull();
     expect(p.slice(r![0], r![1])).toContain("12.4 ug/L");
+  });
+});
+
+describe("snapQuote", () => {
+  const text = "HIL A  residential with garden/accessible soil (home grown produce <10% fruit and vegetable intake, (no poultry), also includes children\u2019s day care centres";
+  it("recovers the exact source span when only punctuation differs", () => {
+    const got = snapQuote(text, "Residential with garden/accessible soil (home grown produce <10% fruit and vegetable intake (no poultry)");
+    expect(got).toBe("residential with garden/accessible soil (home grown produce <10% fruit and vegetable intake, (no poultry");
+  });
+  it("rejects a changed word or number", () => {
+    expect(snapQuote(text, "residential with garden/accessible soil (home grown produce <20% fruit and vegetable intake")).toBeNull();
+  });
+  it("rejects very short or elided quotes", () => {
+    expect(snapQuote(text, "residential with garden")).toBeNull();
+    expect(snapQuote(text, "residential with ... fruit and vegetable intake")).toBeNull();
   });
 });

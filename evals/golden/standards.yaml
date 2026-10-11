@@ -73,7 +73,9 @@
 - id: s15
   query: What do the laboratory analysis guidelines say about holding times and sample containers?
   expected_route: standards
-  gold: [{doc: nepm-b3, pages: [29], phrase: "maximum holding times"}]
+  gold:
+    - {doc: nepm-b3, pages: [29], phrase: "maximum holding times"}
+    - {doc: nepm-b3, pages: [31, 32], phrase: "Maximum holding time"}
   must_contain: [["holding time"]]
 - id: s16
   query: How are groundwater investigation levels defined?

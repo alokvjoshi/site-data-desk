@@ -10,7 +10,7 @@ import { hybridSearch } from "../retrieval";
 import { getCtx, type RunContext } from "../trace";
 import type { Answer, Candidate, Claim, Evidence, Removed, Route, Source } from "../types";
 import { clip } from "../util";
-import { missingNumbers, quoteFound } from "../verify";
+import { missingNumbers, quoteFound, snapQuote } from "../verify";
 import { buildRows, loadFacts, narrateInsight, planInsight, type InsightPlan, type InsightRow } from "./insights";
 
 interface Turn { q: string; a: string }
@@ -278,8 +278,15 @@ const verify = async (s: S): Promise<U> => need(s.runId).step("verify", async (r
       const alt = ev.find((x) => quoteFound(x.content, c.quote));
       if (alt) { e = alt; claim.evidence = alt.n; }
     }
+    if (!e || !quoteFound(e.content, claim.quote)) {
+      // punctuation-only drift in the quote: snap to the exact source span (cited passage first, then the others)
+      for (const x of [e, ...ev]) {
+        const snapped = x && snapQuote(x.content, c.quote);
+        if (x && snapped) { e = x; claim.evidence = x.n; claim.quote = snapped.slice(0, 400); break; }
+      }
+    }
     if (!e) return { ok: false, claim, reason: "cites a passage that does not exist" };
-    if (!quoteFound(e.content, c.quote)) return { ok: false, claim, reason: "quote not found verbatim in any retrieved passage" };
+    if (!quoteFound(e.content, claim.quote)) return { ok: false, claim, reason: "quote not found verbatim in any retrieved passage" };
     const missing = missingNumbers(c.text, e.content);
     if (missing.length) return { ok: false, claim, reason: `number(s) not in the cited passage: ${missing.join(", ")}` };
     const j = await judge(ctx, "support", { claim: c.text, passage: { source: e.doc_title, date: e.doc_date, text: e.content.slice(0, 2400) } }, { support: SUPPORT });

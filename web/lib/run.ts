@@ -35,7 +35,7 @@ export async function runChat(a: ChatArgs): Promise<{ answer: Answer; ctx: RunCo
     const graph = await getQAGraph();
     const stream = await graph.stream(
       { runId: ctx.runId, query: clean, routeOverride: a.routeOverride ?? null },
-      { configurable: { thread_id: a.threadId }, streamMode: "updates" },
+      { configurable: { thread_id: a.threadId }, streamMode: "updates", signal: AbortSignal.timeout(55000) },
     );
     for await (const update of stream) {
       for (const [node, delta] of Object.entries(update as Record<string, { result?: Answer | null } | undefined>)) {

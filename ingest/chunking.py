@@ -14,11 +14,18 @@ from dataclasses import dataclass, field
 
 import yaml
 
-TARGET = 1600
+TARGET = 1200
 HARD_MAX = 3200
 PAGE_RE = re.compile(r"<!--\s*page:\s*(\d+)\s*-->")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:[|#][^\]]*)?\]\]")
+
+
+def search_text(content: str) -> str:
+    """Content plus a de-glued copy for full-text search: footnote markers stuck to words ('Arsenic2 100') become
+    separate tokens ('Arsenic 2 100'). Stored content is untouched so quotes stay verbatim."""
+    deglued = re.sub(r"(?<=[A-Za-z)])(\d{1,2})(?=\s|$)", r" \1", content)
+    return content if deglued == content else content + "\n" + deglued
 
 
 @dataclass

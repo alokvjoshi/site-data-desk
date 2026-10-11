@@ -1,5 +1,5 @@
 {
- "version": "2cc45c0c06",
+ "version": "c71f9cdb8b",
  "thresholds": {
   "route_min_confidence": 0.55,
   "attack": 0.6,
@@ -10,8 +10,8 @@
   "support_confidence": 0.8,
   "keep_ratio": 0.6,
   "out_flag": 0.6,
-  "retrieval_k": 30,
-  "rerank_max": 12,
+  "retrieval_k": 40,
+  "rerank_max": 20,
   "evidence_max": 8,
   "claims_max": 6,
   "history_turns": 6,

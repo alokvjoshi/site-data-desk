@@ -11,7 +11,12 @@ export function getCheckpointer(): Promise<BaseCheckpointSaver> {
   saver ??= (async () => {
     const url = optEnv("SUPABASE_DB_URL");
     if (!url) return new MemorySaver();
-    const pool = new pg.Pool({ connectionString: url, max: 2, ssl: { rejectUnauthorized: false }, idleTimeoutMillis: 10000 });
+    const pool = new pg.Pool({
+      connectionString: url, max: 2, ssl: { rejectUnauthorized: false },
+      idleTimeoutMillis: 10000, connectionTimeoutMillis: 10000, keepAlive: true, query_timeout: 20000,
+    });
+    // The Supabase pooler resets idle connections. Without this handler the error is unhandled and the request wedges.
+    pool.on("error", (e) => console.warn("checkpointer pool: idle client error (ignored):", e.message));
     const s = new PostgresSaver(pool);
     await s.setup();
     return s;

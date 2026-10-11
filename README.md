@@ -40,12 +40,12 @@ You need: Node 20+ (22 recommended), Python 3.12+, a Supabase project, an OpenRo
 ```bash
 make setup                      # python venv + web deps
 cp .env.example .env            # then fill in the keys (see below)
-scripts/setup-supabase.sh       # migrations + embedding Edge Function (needs `supabase login` and `supabase link`)
-make seed standards sync        # fictional vault, real standards, index everything (about 1,150 chunks)
+scripts/setup-supabase.sh       # apply the database migrations
+make seed standards sync        # fictional vault, real standards, index everything (about 1,550 chunks)
 make dev                        # http://localhost:3000
 ```
 
-`.env` needs: `OPENROUTER_API_KEY`, `TYPESAFE_API_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_DB_URL` (use the **session pooler**, port 5432). The salt, eval key and embed secret are generated for you.
+`.env` needs: `OPENROUTER_API_KEY`, `TYPESAFE_API_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_DB_URL` (use the **session pooler**, port 5432). The salt and eval key are generated for you. Embeddings use `openai/text-embedding-3-small` at 384 dimensions through OpenRouter (about one cent to index everything).
 
 Check the OpenRouter model id before the first run: `curl -s https://openrouter.ai/api/v1/models | grep -i deepseek`, then set `OPENROUTER_MODEL`.
 
@@ -80,7 +80,7 @@ make eval-baseline  # accept the current run as the new baseline (a deliberate h
 | Service | Limit relied on | If exceeded |
 |---|---|---|
 | Vercel Hobby | personal, non-commercial use; function/CPU quotas | account can be paused |
-| Supabase Free | 500 MB database, 500k Edge Function calls/month, **pauses after about 7 days idle** | the nightly workflow pings `/api/health`; restore from the dashboard if paused |
+| Supabase Free | 500 MB database, **pauses after about 7 days idle** | the nightly workflow pings `/api/health`; restore from the dashboard if paused |
 | OpenRouter | pay-as-you-go (pennies per hundred questions) | requests fail; the per-IP and global caps limit exposure |
 | Jev | per your TypeSafe plan | retried; the app degrades to exact-match checks and says so |
 
@@ -90,7 +90,7 @@ Defaults: 20 questions per IP per day, 500 per day overall (`DAILY_QUOTA_PER_IP`
 
 ```
 web/        Next.js app: pages, API routes, LangGraph graphs (lib/graph), Jev and OpenRouter clients
-supabase/   migrations and the gte-small embedding Edge Function
+supabase/   database migrations
 vault/      Obsidian vault, the source of truth (standards, fictional company, glossary, proposals, traces)
 seed/       deterministic generator for the fictional company
 ingest/     PDF to markdown, chunking, sync, trace export

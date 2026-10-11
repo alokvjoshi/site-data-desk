@@ -41,7 +41,9 @@ export async function callTool<T>(ctx: RunContext, a: ToolCallArgs<T>): Promise<
         model,
         messages,
         temperature: 0,
-        max_tokens: a.maxTokens ?? 1500,
+        max_tokens: a.maxTokens ?? 2500,
+        // Structured extraction/drafting does not need chain-of-thought; thinking tokens made replies slow and got them cut off.
+        reasoning: { enabled: false },
         // Native structured output: this model emitted raw tool-call markup as text when tool calling was forced.
         response_format: { type: "json_schema", json_schema: { name: a.toolName, strict: false, schema: parameters } },
       }),

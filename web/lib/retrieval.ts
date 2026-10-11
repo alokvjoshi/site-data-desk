@@ -24,6 +24,16 @@ export function expandTerms(query: string): string[] {
 
 export const toFtsQuery = (query: string) => expandTerms(query).join(" | ");
 
+// Generic words that appear in most passages of a contaminated-land standard: useless for a strict match.
+const GENERIC = new Set(("value values level levels investigation health hil hsl eil esl acl guideline guidelines nepm schedule table " +
+  "criteria criterion limit limits residential garden access use land site sites say says state states define defined mean means").split(" "));
+
+/** Strict AND query over the distinctive words only (at most 5), so rare terms like an analyte name dominate. */
+export function toStrictQuery(query: string): string {
+  const words = [...new Set((query.toLowerCase().match(/[a-z][a-z0-9]+/g) ?? []).filter((w) => w.length >= 3 && !STOP.has(w) && !GENERIC.has(w)))];
+  return words.length >= 2 ? words.slice(0, 5).join(" & ") : "";
+}
+
 export interface SearchOpts {
   corpora?: ("standards" | "internal")[] | null;
   project?: string | null;
@@ -38,6 +48,7 @@ export async function hybridSearch(query: string, opts: SearchOpts = {}): Promis
   const { data, error } = await db.rpc("hybrid_search", {
     q_emb: JSON.stringify(emb),
     fts_query: toFtsQuery(query),
+    fts_strict: toStrictQuery(query),
     corpora: opts.corpora ?? null,
     proj: opts.project ?? null,
     doc_filter: opts.docs ?? null,

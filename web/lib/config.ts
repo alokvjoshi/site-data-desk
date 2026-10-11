@@ -2,6 +2,8 @@ import raw from "./config.generated.json";
 
 export interface Thresholds {
   route_min_confidence: number;
+  route_min_prob: number;
+  route_min_margin: number;
   attack: number;
   out_of_scope: number;
   needs_clarification: number;

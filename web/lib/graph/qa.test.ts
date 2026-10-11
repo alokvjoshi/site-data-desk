@@ -70,7 +70,7 @@ describe("QA graph", () => {
     const { answer } = await ask("How much soil was removed at Halden Road in total?");
     expect(answer.status).toBe("ok");
     expect(answer.sources[0].docId).toBe("email-p1-012");
-    expect(answer.claims[0].evidence).toBe(2);
+    expect(answer.claims[0].evidence).toBe(answer.sources[0].n);
   });
 
   it("returns not_found when the model says the evidence does not answer", async () => {

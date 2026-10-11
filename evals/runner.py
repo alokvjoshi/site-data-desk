@@ -144,6 +144,11 @@ def run(args) -> dict:
         qa = by([c for c in qa if c.get("answerable", True)], max(1, args.subset - 6)) + [c for c in qa if not c.get("answerable", True)][:3]
         insights, routing, safety = by(insights, 2), by(routing, 4), by(safety, 4)
 
+    if args.latency_only:
+        seq = [c for c in qa if c.get("answerable", True)][:14]
+        ms = [cli.chat(c["query"])[1] for c in seq]
+        print("sequential latency ms:", sorted(ms), "p95:", p95([float(x) for x in ms]))
+        sys.exit(0)
     failures: list[dict] = []
     lat: list[float] = []
     costs: list[float] = []
@@ -234,6 +239,8 @@ def run(args) -> dict:
     def rate(a: int, b: int, default: float = 1.0) -> float:
         return a / b if b else default
 
+    if args.sequential_latency or not args.subset:  # full runs time 14 questions one at a time, like a visitor
+        lat = [float(cli.chat(c["query"])[1]) for c in [c for c in qa if c.get("answerable", True)][:14]]
     metrics = {
         "citation_validity": rate(cite_ok, cite_total),
         "support_rate": rate(sup_ok, sup_total),
@@ -297,6 +304,8 @@ def main() -> None:
     ap.add_argument("--subset", type=int, default=0)
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--record", action="store_true")
+    ap.add_argument("--latency-only", action="store_true", help="time 14 answerable questions one at a time and exit")
+    ap.add_argument("--sequential-latency", action="store_true", help="measure p95 latency one question at a time (what a visitor sees)")
     ap.add_argument("--update-baseline", action="store_true")
     args = ap.parse_args()
 
@@ -316,9 +325,11 @@ def main() -> None:
     print("\nGATE:", "PASS" if passed else "FAIL\n  " + "\n  ".join(bad))
     if args.record and not args.subset:
         record(res, passed)
-    if args.update_baseline:
+    if args.update_baseline and passed:
         bp.write_text(json.dumps(dict(metrics=m, updated=time.strftime("%Y-%m-%d")), indent=1))
         print("baseline updated (commit it deliberately)")
+    elif args.update_baseline:
+        print("baseline NOT updated: the gate failed")
     sys.exit(0 if passed else 1)
 
 

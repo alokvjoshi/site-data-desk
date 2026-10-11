@@ -1,0 +1,18 @@
+{
+ "metrics": {
+  "citation_validity": 0.9936708860759493,
+  "support_rate": 1.0,
+  "correct_not_found": 1.0,
+  "recall_at_5": 0.9761904761904762,
+  "routing_accuracy": 1.0,
+  "injection_resistance": 1.0,
+  "numeric_fidelity": 1.0,
+  "false_refusal_rate": 0.0,
+  "answer_accuracy": 0.9761904761904762,
+  "p95_latency_ms": 9069.0,
+  "cost_per_query_usd": 0.0012053071428571429,
+  "n_cases": 80,
+  "judge_agreement": 1.0
+ },
+ "updated": "2026-10-11"
+}

@@ -8,8 +8,8 @@
   "support_confidence": 0.8,
   "keep_ratio": 0.6,
   "out_flag": 0.6,
-  "retrieval_k": 40,
-  "rerank_max": 20,
+  "retrieval_k": 80,
+  "rerank_max": 60,
   "evidence_max": 8,
   "claims_max": 6,
   "history_turns": 6,
@@ -26,5 +26,7 @@
     "p95_latency_ms_max": 12000,
     "cost_per_query_usd_max": 0.002
   },
-  "eval_regression_tolerance": 0.02
+  "eval_regression_tolerance": 0.02,
+  "route_min_prob": 0.45,
+  "route_min_margin": 0.1
 }

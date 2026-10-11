@@ -83,12 +83,58 @@ def is_tabular(block: str) -> bool:
         return False
     if all(l.lstrip().startswith("|") for l in lines):
         return True
+    if len(lines) == 1:  # a single row/caption line (flattened PDF table rows end with two spaces)
+        l = lines[0]
+        header = re.match(r"^(Chemical|Analyte|Parameter|Compound|Substance|Contaminant|Soil|Land use)\b", l) and len(l) < 500 and len(re.findall(r"\d", l)) >= 2
+        return bool(re.match(r"^(Table|Figure)\s+\w+", l)) or bool(header) or (l.endswith("  ") and len(re.findall(r"\d", l)) >= 2)
     pipes_or_pairs = sum(1 for l in lines if l.endswith("  ") or re.match(r"^(Table|Figure)\s+\w+", l))
     return pipes_or_pairs >= max(2, len(lines) // 2)
 
 
 def split_blocks(text: str) -> list[str]:
     return [b.strip("\n") for b in re.split(r"\n{2,}", text) if b.strip()]
+
+
+def split_table(unit: list[str], limit: int = 600) -> list[str]:
+    """Split a long table into groups of rows, repeating the caption and column header in every piece so each row
+    group is self-describing for retrieval ("Table 1A(1) ... Residential A B C D ... Lead 300 1200 600 1 500")."""
+    if len(unit) == 1 and all(l.lstrip().startswith("|") for l in unit[0].split("\n") if l.strip()):  # markdown table
+        lines = [l for l in unit[0].split("\n") if l.strip()]
+        head, rows = lines[:2], lines[2:]
+        joiner = "\n"
+    else:
+        head_n = 2 if unit and re.match(r"^(Table|Figure)\b", unit[0]) else 0
+        head, rows = unit[:head_n], unit[head_n:]
+        joiner = "\n\n"
+    base = sum(len(h) for h in head)
+    out, cur, size = [], [], base
+    for r in rows:
+        if cur and size + len(r) > limit:
+            out.append(joiner.join(head + cur))
+            cur, size = [], base
+        cur.append(r)
+        size += len(r) + 2
+    if cur:
+        out.append(joiner.join(head + cur))
+    return out
+
+
+def gather_table(blocks: list[str], i: int) -> tuple[list[str], int]:
+    """Starting at a 'Table ...' caption, collect the following short non-sentence blocks as table rows. Wrapped row
+    labels (a lone 'Mercury' above '(inorganic)5 40 120 80 730') are merged into the next row."""
+    unit = [blocks[i]]
+    j = i + 1
+    while j < len(blocks):
+        b = blocks[j]
+        prose = len(b) > 300 or re.search(r"[a-z]{3,}[.:]\s*$", b) and not re.search(r"\d", b)
+        if prose or re.match(r"^(Notes?:|Table\s+\w+)", b):
+            break
+        if not re.search(r"\d", b) and len(b) < 60 and j + 1 < len(blocks):  # wrapped label: merge with next row
+            blocks = blocks[:j] + [b + " " + blocks[j + 1]] + blocks[j + 2:]
+            continue
+        unit.append(b)
+        j += 1
+    return unit, j
 
 
 def pack(blocks: list[str], target: int = TARGET, hard_max: int = HARD_MAX) -> list[str]:
@@ -99,6 +145,15 @@ def pack(blocks: list[str], target: int = TARGET, hard_max: int = HARD_MAX) -> l
     i = 0
     while i < len(blocks):
         b = blocks[i]
+        if re.match(r"^Table\s+\w+", b):
+            tbl, j = gather_table(blocks, i)
+            if len(tbl) > 3 and sum(len(x) for x in tbl) > 700:
+                if cur:
+                    out.append("\n\n".join(cur))
+                    cur, size = [], 0
+                out.extend(split_table(tbl))
+                i = j
+                continue
         unit = [b]
         if is_tabular(b):
             # keep consecutive tabular blocks (table continues across blank lines) together
@@ -106,6 +161,13 @@ def pack(blocks: list[str], target: int = TARGET, hard_max: int = HARD_MAX) -> l
                 i += 1
                 unit.append(blocks[i])
         ulen = sum(len(x) for x in unit) + 2 * (len(unit) - 1)
+        if is_tabular(b) and ulen > 1000:
+            if cur:
+                out.append("\n\n".join(cur))
+                cur, size = [], 0
+            out.extend(split_table(unit))
+            i += 1
+            continue
         if cur and size + ulen > target and not (is_tabular(b) and size + ulen <= hard_max):
             out.append("\n\n".join(cur))
             cur, size = [], 0

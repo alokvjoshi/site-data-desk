@@ -128,8 +128,8 @@ const intake = async (s: S): Promise<U> => {
     const regexAttack = INJECTION_RE.test(q);
     const j = await judge(ctx, "intake", { query: q, previous_query: s.turns.at(-1)?.q ?? null }, {
       route: choice("Which source does the question in `query` need?", {
-        standards: "Asks what a guideline, standard or regulatory document says: investigation or screening levels, methods, definitions, requirements, procedures.",
-        internal: "Asks about a specific company project, report, email, Slack discussion, decision, person, client or event.",
+        standards: "Asks what a published guideline, standard or regulatory document says, with NO company project, person or event named: investigation or screening levels (HIL, HSL, EIL, ACL, ESL), hydrocarbon fractions (TRH F1-F4, BTEXN), soil types, sampling and analysis methods, definitions, requirements, procedures, technical terms.",
+        internal: "ONLY when the question names or clearly refers to something in the company's own records: a named project (Halden Road, Marlin Bay, Brightwater, Ironbark), a staff member, client, report, email, Slack discussion, decision or event. A question about a technical term, level or method with no such reference is NOT internal.",
         both: "Needs both standards and company project records, for example comparing a project's results with a criterion.",
         insights: "Asks across projects or about the portfolio: overall status, which projects have X, risks, delays, budgets, decisions, or wants a digest or summary.",
         smalltalk: "A greeting, thanks, or a question about how this assistant works.",
@@ -142,7 +142,13 @@ const intake = async (s: S): Promise<U> => {
     const attack = regexAttack || (j?.noul("is_attack") ?? 0) >= T.attack;
     const info = j?.choice("route");
     let route: Route = s.routeOverride ?? "both";
-    if (!s.routeOverride && info) route = info.confidence >= T.route_min_confidence ? (info.label as Route) : "both";
+    if (!s.routeOverride && info) {
+      // Take Jev's top label when it is clearly ahead; otherwise search both corpora. (Choice "confidence" measures how
+      // concentrated the distribution is, which penalises a correct answer with a plausible runner-up.)
+      const ranked = Object.entries(info.probs).sort((a, b) => b[1] - a[1]);
+      const [top, second] = [ranked[0], ranked[1]];
+      route = top && top[1] >= T.route_min_prob && top[1] - (second?.[1] ?? 0) >= T.route_min_margin ? (top[0] as Route) : "both";
+    }
     let phase: Phase = route === "insights" ? "insights" : FOLLOWUP_RE.test(q) || q.split(/\s+/).length <= 6 ? (s.turns.length ? "rewrite" : "retrieve") : "retrieve";
     if (attack) phase = "refuse";
     else if (!s.routeOverride && (route === "smalltalk" || route === "out_of_scope")) phase = "deflect";
@@ -321,7 +327,7 @@ const finalize = async (s: S): Promise<U> => need(s.runId).step("finalize", asyn
     return { result: baseAnswer(s, ctx, { status: "refused", markdown: md, notice: "Output safety check blocked this answer." }), turns: turnOf(s, md) };
   }
   const notice = s.attempt > 1 ? "Some statements were removed or redrafted because they could not be verified against the sources." : undefined;
-  return { result: baseAnswer(s, ctx, { status: "ok", markdown: md, claims: s.verified, sources, notice }), turns: turnOf(s, md) };
+  return { result: baseAnswer(s, ctx, { status: "ok", markdown: md, claims: s.verified.map((c) => ({ ...c, evidence: idx(c.evidence) })), sources, notice }), turns: turnOf(s, md) };
 });
 
 const notfound = async (s: S): Promise<U> => need(s.runId).step("notfound", async (rec) => {

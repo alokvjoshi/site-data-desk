@@ -7,7 +7,13 @@ A cited-answer assistant for environmental consultancies. Ask what a contaminate
 - **Leadership view:** portfolio cards and a weekly digest where every number is verified against the project data.
 - **Everything is traced, checkpointed and evaluated.** Open "How was this answered?" under any answer.
 
+**Live demo: https://site-data-desk.vercel.app**
+
 > Demonstration only. The company and its data are fictional. Not professional advice. Not affiliated with any company.
+
+## Latest evaluation (80 cases, full gate)
+
+Quotes found verbatim 99.4% · claims supported 100% · routing 100% · correct "not found" 100% · injection/safety cases 100% · numeric fidelity 100% · recall@5 97.6% · answer accuracy 97.6% · false refusals 0% · p95 latency 9.1 s (one question at a time) · $0.0012 per question. Two known misses are listed in `evals/last_run.json`.
 
 ## How it works
 
